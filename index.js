@@ -6,7 +6,7 @@ var players = [];
 var port_number = server.listen(process.env.PORT || 8080);
 
 server.listen(port_number, function(){
-	console.log("Server is now running...");
+	console.log("Server is now running on port " + port_number);
 });
 
 io.on('connection', function(socket){

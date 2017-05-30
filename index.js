@@ -1,12 +1,26 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var players = [];
 
-var port_number = server.listen(process.env.PORT || 8080);
+app.set('port', (process.env.PORT || 8080));
 
-server.listen(port_number, function(){
-	console.log("Server is now running on port " + port_number);
+app.use(express.static(__dirname + '/public'));
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+app.get('/', function(request, response) {
+    response.render('pages/index');
+});
+
+// app.listen(app.get('port'), function() {
+//     console.log('Node app is running on port', app.get('port'));
+// });
+
+server.listen(app.get('port'), function(){
+	console.log("Server is now running...", app.get('port'));
 });
 
 io.on('connection', function(socket){
